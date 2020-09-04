@@ -9,7 +9,7 @@
     clustername: 129.40.188.157
     domain:
     username: superuser
-    password: pwb0t048
+    password: <Your_Password>
     log_path: /tmp/mkhost_attach_playbook.debug
   tasks:
     - name: Define a new FC host

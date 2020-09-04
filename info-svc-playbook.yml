@@ -8,10 +8,10 @@
   tasks:
     - name: Gather info from storage
       ibm_svc_info:
-        clustername: 129.40.188.157
+        clustername: <Your_IP_or_URL>
         domain:
         username: superuser
-        password: pwb0t048
+        password: <Your_Password>
         log_path: /tmp/info_playbook.debug
         name: gather_info
         state: info

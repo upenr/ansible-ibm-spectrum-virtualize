@@ -6,10 +6,10 @@
   gather_facts: no
   connection: local
   vars:
-    clustername: 129.40.188.157
+    clustername: <Your_IP_or_URL>
     domain:
     username: superuser
-    password: pwb0t048
+    password: <Your_Password>
     log_path: mkhost_playbook.debug
   tasks:
     - name: Define a new FC host
