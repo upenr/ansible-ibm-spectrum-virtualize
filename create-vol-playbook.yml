@@ -1,0 +1,27 @@
+---
+- name: Create a volume
+  hosts: localhost
+  collections:
+    - ibm.spectrum_virtualize
+  gather_facts: no
+  connection: local
+  vars:
+    clustername: 129.40.188.157
+    domain:
+    username: superuser
+    password: pwb0t048
+    log_path: /tmp/mkhost_attach_playbook.debug
+  tasks:
+    - name: Create a new volume
+      ibm_svc_vdisk:
+        clustername: "{{ clustername }}"
+        domain: "{{ domain }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+        log_path: "{{ log_path | default('/tmp/create_vol_playbook.debug') }}"
+        name: ansibleVol1
+        state: present
+        mdiskgrp: Pool0
+        easytier: "off"
+        size: "10"
+        unit: "gb"

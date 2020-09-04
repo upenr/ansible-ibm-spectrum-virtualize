@@ -1,0 +1,50 @@
+---
+- name: Create FC host, volume and map it to host
+  hosts: localhost
+  collections:
+    - ibm.spectrum_virtualize
+  gather_facts: no
+  connection: local
+  vars:
+    clustername: 129.40.188.157
+    domain:
+    username: superuser
+    password: pwb0t048
+    log_path: /tmp/mkhost_attach_playbook.debug
+  tasks:
+    - name: Define a new FC host
+      ibm_svc_host:
+        clustername: "{{ clustername }}"
+        domain: "{{ domain }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+        log_path: "{{ log_path | default('/tmp/create_host_playbook.debug') }}"
+        name: ansible-host-svm12
+        state: present
+        fcwwpn: 100000109b46f496:100000109b46f497
+        iogrp: 0:1:2:3
+        protocol: scsi
+        type: generic
+    - name: Create a new volume
+      ibm_svc_vdisk:
+        clustername: "{{ clustername }}"
+        domain: "{{ domain }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+        log_path: "{{ log_path | default('/tmp/create_vol_playbook.debug') }}"
+        name: ansibleVol1
+        state: present
+        mdiskgrp: Pool0
+        easytier: "off"
+        size: "10"
+        unit: "gb"
+    - name: Map volume to host
+      ibm_svc_vol_map:
+        clustername: "{{ clustername }}"
+        domain: "{{ domain }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+        log_path: "{{ log_path | default('/tmp/map_vol_playbook.debug') }}"
+        volname: ansibleVol1
+        host: ansible-host-svm12
+        state: present
