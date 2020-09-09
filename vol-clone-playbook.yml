@@ -1,0 +1,28 @@
+---
+- name: Playbook to clone a volume
+  hosts: localhost
+  collections:
+    - ibm.spectrum_virtualize
+  gather_facts: no
+  connection: local
+  vars:
+    clustername: <Your_IP_or_URL>
+    domain:
+    username: superuser
+    password: <Your_Password>
+    log_path: /tmp/vol_clone_playbook.debug
+  tasks:
+    - name: Create flash Copy Mapping for clone volume
+      ibm_svc_volume_clone:
+        clustername: "{{clustername}}"
+        domain: "{{domain}}"
+        username: "{{username}}"
+        password: "{{password}}"
+        log_path: "{{log_path}}"
+        state: present
+        name: volume-clone-from-ansible
+        volume: ansibleVol1
+        clone: ansibleVol1Clone
+        mdiskgrp: Pool0
+        copyrate: 100
+        cleanrate: 100
